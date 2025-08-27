@@ -1,0 +1,48 @@
+{
+  "name": "csmarketapi",
+  "version": "1.0.0",
+  "description": "The official Javascript Client for CSMarketAPI",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && bun build ./src/index.ts --target bun --format esm --sourcemap --outdir dist"
+  },
+  "keywords": [
+    "csgo",
+    "cs2",
+    "api",
+    "client",
+    "csmarketapi"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/softwerk-org/csmarketapi-js.git"
+  },
+  "author": {
+    "name": "Tom Clesius",
+    "email": "tom@softwerk.ai"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18",
+    "bun": ">=1.0.0"
+  }
+}
