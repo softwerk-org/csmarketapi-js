@@ -1,37 +1,38 @@
-CSMarketAPI Client (TypeScript)
+# csmarketapi
 
-Asynchronous TypeScript client for `CSMarketAPI` — typed interfaces, enums for marketplaces/currencies, and a simple fetch-based client. Works with Bun and modern Node runtimes.
+Lightweight JS/TS client for CSMarketAPI. ESM, typed, fetch-based.
 
-Installation
+## Install
 ```bash
 bun add csmarketapi
+# or
+npm i csmarketapi
 ```
 
-Quickstart
+## Quickstart
 ```ts
 import { CSMarketAPI, Market, Currency } from "csmarketapi"
 
 const client = new CSMarketAPI({ apiKey: process.env.API_KEY! })
-const items = await client.getItems()
-console.log(items.items.length)
+const latest = await client.getListingsLatestAggregated({
+  marketHashName: "Chroma 2 Case",
+  markets: Object.values(Market),
+  currency: Currency.USD,
+})
+console.log(latest.market_hash_name, latest.listings.length)
 ```
 
-API
-- Listings: `getListingsLatestAggregated({ marketHashName, markets, currency?, maxAge? })`, `getListingsHistoryAggregated({ marketHashName, markets, currency?, maxAge? })`
-- Sales: `getSalesLatestAggregated({ marketHashName, markets, currency? })`, `getSalesHistoryAggregated({ marketHashName, markets, start?, end?, currency? })`
-- Meta: `getItems()`, `getCurrencyRates()`, `getPlayerCountsLatest()`, `getPlayerCountsHistory({ start?, end? })`
-- Steam: `getSteamProfile({ steamId })`, `getSteamInventory({ steamId })`, `getSteamFriendslist({ steamId })`
-- Float: `getFloatInfo({ inspectLink })`
+## API
+- Listings: `getListingsLatestAggregated`, `getListingsHistoryAggregated`
+- Sales: `getSalesLatestAggregated`, `getSalesHistoryAggregated`
+- Meta: `getItems`, `getCurrencyRates`, `getPlayerCountsLatest`, `getPlayerCountsHistory`
+- Steam: `getSteamProfile`, `getSteamInventory`, `getSteamFriendslist`
+- Float: `getFloatInfo`
 
-License
+Enums: `Market`, `Currency`
+
+## Requirements
+- Node 18+ (or Bun 1+) with global `fetch`
+
+## License
 MIT
-
-Release
-```bash
-# 1) bump version in package.json
-# 2) tag and push
-git commit -am "release: v0.1.0"
-git tag v0.1.0
-git push && git push --tags
-# GitHub Action builds and publishes with bun
-```
