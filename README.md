@@ -25,7 +25,7 @@ console.log(latest.market_hash_name, latest.listings.length)
 ## API
 - Listings: `getListingsLatestAggregated`, `getListingsHistoryAggregated`
 - Sales: `getSalesLatestAggregated`, `getSalesHistoryAggregated`
-- Meta: `getItems`, `getCurrencyRates`, `getPlayerCountsLatest`, `getPlayerCountsHistory`
+- Meta: `getItems`, `getMarkets`, `getCurrencyRates`, `getPlayerCountsLatest`, `getPlayerCountsHistory`
 - Steam: `getSteamProfile`, `getSteamInventory`, `getSteamFriendslist`
 - Float: `getFloatInfo`
 
