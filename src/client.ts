@@ -5,6 +5,7 @@ import type {
     Items,
     ListingsHistoryAggregated,
     ListingsLatestAggregated,
+    Markets,
     PlayerCountsHistory,
     PlayerCountsLatest,
     SalesHistoryAggregated,
@@ -137,6 +138,11 @@ export class CSMarketAPI {
     async getItems(): Promise<Items> {
         const items = await this.request<Items["items"]>("/v1/items")
         return { items }
+    }
+
+    async getMarkets(): Promise<Markets> {
+        const markets = await this.request<Markets["markets"]>("/v1/markets")
+        return { markets }
     }
 
     async getCurrencyRates(): Promise<CurrencyRates> {

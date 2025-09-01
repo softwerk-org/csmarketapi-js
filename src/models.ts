@@ -148,4 +148,15 @@ export interface FloatInfo {
   status?: unknown | null
 }
 
+export interface Markets {
+  markets: Array<{
+    id: number
+    name: string
+    display_name: string
+    enabled: boolean
+    url?: string | null
+    description?: string | null
+  }>
+}
+
 
