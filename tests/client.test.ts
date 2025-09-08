@@ -13,53 +13,53 @@ beforeAll(() => {
 
 describe('CSMarketAPI Tests', () => {
   test('getItems', async () => {
-    expect(await client!.getItems()).toBeDefined();
+    await client!.getItems();
   });
 
   test('getMarkets', async () => {
-    expect(await client!.getMarkets()).toBeDefined();
+    await client!.getMarkets();
   });
 
   test('getCurrencyRates', async () => {
-    expect(await client!.getCurrencyRates()).toBeDefined();
+    await client!.getCurrencyRates();
   });
 
   test('getPlayerCountsLatest', async () => {
-    expect(await client!.getPlayerCountsLatest()).toBeDefined();
+    await client!.getPlayerCountsLatest();
   });
 
   test('getPlayerCountsHistory', async () => {
-    expect(await client!.getPlayerCountsHistory()).toBeDefined();
+    await client!.getPlayerCountsHistory();
   });
 
   test('getListingsLatestAggregated', async () => {
-    expect(await client!.getListingsLatestAggregated({
+    await client!.getListingsLatestAggregated({
       marketHashName: 'Shadow Case',
       currency: Currency.USD
-    })).toBeDefined();
+    });
   });
 
   test('getListingsHistoryAggregated', async () => {
-    expect(await client!.getListingsHistoryAggregated({
+    await client!.getListingsHistoryAggregated({
       marketHashName: 'Shadow Case',
       markets: [Market.STEAMCOMMUNITY],
       currency: Currency.USD
-    })).toBeDefined();
+    });
   });
 
   test('getSalesLatestAggregated', async () => {
-    expect(await client!.getSalesLatestAggregated({
+    await client!.getSalesLatestAggregated({
       marketHashName: 'Shadow Case',
       markets: [Market.STEAMCOMMUNITY],
       currency: Currency.USD
-    })).toBeDefined();
+    });
   });
 
   test('getSalesHistoryAggregated', async () => {
-    expect(await client!.getSalesHistoryAggregated({
+    await client!.getSalesHistoryAggregated({
       marketHashName: 'Shadow Case',
       markets: [Market.STEAMCOMMUNITY],
       currency: Currency.USD
-    })).toBeDefined();
+    });
   });
 });

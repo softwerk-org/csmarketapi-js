@@ -14,6 +14,21 @@ import type {
     SteamInventory,
     SteamProfile
 } from "./models";
+import {
+    ItemsModel,
+    CurrencyRatesModel,
+    PlayerCountsLatestModel,
+    PlayerCountsHistoryModel,
+    ListingsLatestAggregatedModel,
+    ListingsHistoryAggregatedModel,
+    SalesLatestAggregatedModel,
+    SalesHistoryAggregatedModel,
+    SteamProfileModel,
+    SteamInventoryModel,
+    SteamFriendslistModel,
+    FloatInfoModel,
+    MarketsModel
+} from "./models";
 
 type FetchLike = typeof fetch
 
@@ -74,12 +89,13 @@ export class CSMarketAPI {
         maxAge?: string | null
     }): Promise<ListingsLatestAggregated> {
         const { marketHashName, markets, currency = Currency.USD, maxAge } = args
-        return this.request<ListingsLatestAggregated>("/v1/listings/latest/aggregate", {
+        const result = await this.request<ListingsLatestAggregated>("/v1/listings/latest/aggregate", {
             market_hash_name: marketHashName,
             markets,
             currency,
             ...(maxAge ? { max_age: maxAge } : {})
         })
+        return ListingsLatestAggregatedModel.parse(result) 
     }
 
     async getListingsHistoryAggregated(args: {
@@ -98,25 +114,27 @@ export class CSMarketAPI {
                 ...(maxAge ? { max_age: maxAge } : {})
             }
         )
-        return { items }
+        const result = { items }
+        return ListingsHistoryAggregatedModel.parse(result) 
     }
 
     async getSalesLatestAggregated(args: {
         marketHashName: string
-        markets: ReadonlyArray<Market> | undefined
+        markets?: ReadonlyArray<Market>
         currency?: Currency
     }): Promise<SalesLatestAggregated> {
         const { marketHashName, markets, currency = Currency.USD } = args
-        return this.request<SalesLatestAggregated>("/v1/sales/latest/aggregate", {
+        const result = await this.request<SalesLatestAggregated>("/v1/sales/latest/aggregate", {
             market_hash_name: marketHashName,
             markets,
             currency
         })
+        return SalesLatestAggregatedModel.parse(result) 
     }
 
     async getSalesHistoryAggregated(args: {
         marketHashName: string
-        markets: ReadonlyArray<Market> | undefined
+        markets?: ReadonlyArray<Market>
         start?: string | Date | null
         end?: string | Date | null
         currency?: Currency
@@ -132,25 +150,30 @@ export class CSMarketAPI {
                 currency
             }
         )
-        return { items }
+        const result = { items }
+        return SalesHistoryAggregatedModel.parse(result) 
     }
 
     async getItems(): Promise<Items> {
         const items = await this.request<Items["items"]>("/v1/items")
-        return { items }
+        const result = { items }
+        return ItemsModel.parse(result) 
     }
 
     async getMarkets(): Promise<Markets> {
-        return this.request<Markets>("/v1/markets")
+        const result = await this.request<Markets>("/v1/markets")
+        return MarketsModel.parse(result) 
     }
 
     async getCurrencyRates(): Promise<CurrencyRates> {
         const items = await this.request<CurrencyRates["items"]>("/v1/currency_rates")
-        return { items }
+        const result = { items }
+        return CurrencyRatesModel.parse(result) 
     }
 
     async getPlayerCountsLatest(): Promise<PlayerCountsLatest> {
-        return this.request<PlayerCountsLatest>("/v1/player_counts/latest")
+        const result = await this.request<PlayerCountsLatest>("/v1/player_counts/latest")
+        return PlayerCountsLatestModel.parse(result) 
     }
 
     async getPlayerCountsHistory(args?: { start?: string | Date | null; end?: string | Date | null }): Promise<PlayerCountsHistory> {
@@ -159,29 +182,34 @@ export class CSMarketAPI {
             ...(start ? { start } : {}),
             ...(end ? { end } : {})
         })
-        return { items }
+        const result = { items }
+        return PlayerCountsHistoryModel.parse(result) 
     }
 
     async getSteamProfile(args: { steamId: string }): Promise<SteamProfile> {
         const { steamId } = args
         const data = await this.request<unknown>("/v1/steam/profile", { steam_id: steamId })
-        return { data }
+        const result = { data }
+        return SteamProfileModel.parse(result) 
     }
 
     async getSteamInventory(args: { steamId: string }): Promise<SteamInventory> {
         const { steamId } = args
-        return this.request<SteamInventory>("/v1/steam/inventory", { steam_id: steamId })
+        const result = await this.request<SteamInventory>("/v1/steam/inventory", { steam_id: steamId })
+        return SteamInventoryModel.parse(result) 
     }
 
     async getSteamFriendslist(args: { steamId: string }): Promise<SteamFriendslist> {
         const { steamId } = args
         const data = await this.request<unknown>("/v1/steam/friendslist", { steam_id: steamId })
-        return { data }
+        const result = { data }
+        return SteamFriendslistModel.parse(result) 
     }
 
     async getFloatInfo(args: { inspectLink: string }): Promise<FloatInfo> {
         const { inspectLink } = args
-        return this.request<FloatInfo>("/v1/float", { inspect_link: inspectLink })
+        const result = await this.request<FloatInfo>("/v1/float", { inspect_link: inspectLink })
+        return FloatInfoModel.parse(result) 
     }
 }
 

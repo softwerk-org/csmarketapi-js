@@ -1,174 +1,226 @@
-import type { Market } from "./enums";
+import { z } from 'zod';
+import { Market } from "./enums";
 
-export interface ListingsLatestAggregated {
-  market_hash_name: string
-  listings: Array<{
-    id: number
-    market: Market
-    market_link: string
-    mean_price: number | null
-    min_price: number | null
-    max_price: number | null
-    median_price: number | null
-    listings: number
-    timestamp: string
-  }>
-}
+const ListingsItemModel = z.object({
+  id: z.number(),
+  market: z.enum(Market),
+  market_link: z.string(),
+  mean_price: z.number().nullable(),
+  min_price: z.number().nullable(),
+  max_price: z.number().nullable(),
+  median_price: z.number().nullable(),
+  listings: z.number(),
+  timestamp: z.coerce.date()
+});
 
-export interface ListingsHistoryAggregated {
-  items: Array<{
-    timestamp: string
-    listings: Array<{
-      id: number
-      market: Market
-      mean_price: number | null
-      min_price: number | null
-      max_price: number | null
-      median_price: number | null
-      listings: number
-    }>
-  }>
-}
+export const ListingsLatestAggregatedModel = z.object({
+  market_hash_name: z.string(),
+  listings: z.array(ListingsItemModel)
+});
 
-export interface SalesLatestAggregated {
-  market_hash_name: string
-  sales: Array<{
-    id: number
-    market: Market
-    mean_price: number | null
-    min_price: number | null
-    max_price: number | null
-    median_price: number | null
-    volume: number | null
-    day: string
-  }>
-}
+export const ListingsHistoryAggregatedModel = z.object({
+  items: z.array(z.object({
+    timestamp: z.coerce.date(),
+    listings: z.array(z.object({
+      id: z.number(),
+      market: z.enum(Market),
+      mean_price: z.number().nullable(),
+      min_price: z.number().nullable(),
+      max_price: z.number().nullable(),
+      median_price: z.number().nullable(),
+      listings: z.number()
+    }))
+  }))
+});
 
-export interface SalesHistoryAggregated {
-  items: Array<{
-    day: string
-    sales: Array<{
-      id: number
-      market: Market
-      mean_price: number | null
-      min_price: number | null
-      max_price: number | null
-      median_price: number | null
-      volume: number | null
-    }>
-  }>
-}
+const SalesItemModel = z.object({
+  id: z.number(),
+  market: z.enum(Market),
+  mean_price: z.number().nullable(),
+  min_price: z.number().nullable(),
+  max_price: z.number().nullable(),
+  median_price: z.number().nullable(),
+  volume: z.number().nullable(),
+  day: z.coerce.date()
+});
 
-export interface Items {
-  items: Array<{
-    market_hash_name: string
-    hash_name: string
-    nameid?: number | null
-    classid?: string | null
-    exterior?: string | null
-    category?: string | null
-    weapon?: string | null
-    max_sticker_amount?: number | null
-    used_by_class?: string | null
-    quality?: string | null
-    type?: string | null
-    sticker_type?: string | null
-    graffiti_type?: string | null
-    patch_type?: string | null
-    collection?: string | null
-    sticker_collection?: string | null
-    graffiti_collection?: string | null
-    patch_collection?: string | null
-    graffiti_color?: string | null
-    professional_player?: string | null
-    tournament?: string | null
-    team?: string | null
-    min_float?: number | null
-    max_float?: number | null
-    droppool?: string | null
-    release_dt?: string | null
-    akamai_icon_url?: string | null
-    cloudflare_icon_url?: string | null
-  }>
-}
+export const SalesLatestAggregatedModel = z.object({
+  market_hash_name: z.string(),
+  sales: z.array(SalesItemModel)
+});
 
-export interface CurrencyRates {
-  items: Array<{
-    currency_code: string
-    currency_name: string
-    currency_symbol: string
-    rate: number
-    timestamp: string
-  }>
-}
+export const SalesHistoryAggregatedModel = z.object({
+  items: z.array(z.object({
+    day: z.string(),
+    sales: z.array(z.object({
+      id: z.number(),
+      market: z.enum(Market),
+      mean_price: z.number().nullable(),
+      min_price: z.number().nullable(),
+      max_price: z.number().nullable(),
+      median_price: z.number().nullable(),
+      volume: z.number().nullable()
+    }))
+  }))
+});
 
-export interface PlayerCountsLatest {
-  timestamp: string
-  count: number
-}
+const ItemModel = z.object({
+  market_hash_name: z.string(),
+  hash_name: z.string(),
+  nameid: z.number().nullable().optional(),
+  classid: z.string().nullable().optional(),
+  exterior: z.string().nullable().optional(),
+  category: z.string().nullable().optional(),
+  weapon: z.string().nullable().optional(),
+  max_sticker_amount: z.number().nullable().optional(),
+  used_by_class: z.string().nullable().optional(),
+  quality: z.string().nullable().optional(),
+  type: z.string().nullable().optional(),
+  sticker_type: z.string().nullable().optional(),
+  graffiti_type: z.string().nullable().optional(),
+  patch_type: z.string().nullable().optional(),
+  collection: z.string().nullable().optional(),
+  sticker_collection: z.string().nullable().optional(),
+  graffiti_collection: z.string().nullable().optional(),
+  patch_collection: z.string().nullable().optional(),
+  graffiti_color: z.string().nullable().optional(),
+  professional_player: z.string().nullable().optional(),
+  tournament: z.string().nullable().optional(),
+  team: z.string().nullable().optional(),
+  min_float: z.number().nullable().optional(),
+  max_float: z.number().nullable().optional(),
+  droppool: z.string().nullable().optional(),
+  release_dt: z.string().nullable().optional(),
+  akamai_icon_url: z.string().nullable().optional(),
+  cloudflare_icon_url: z.string().nullable().optional()
+});
 
-export interface PlayerCountsHistory {
-  items: Array<{
-    timestamp: string
-    count: number
-  }>
-}
+export const ItemsModel = z.object({
+  items: z.array(ItemModel)
+});
 
-export interface SteamProfile {
-  data: unknown
-}
+const CurrencyRateModel = z.object({
+  currency_code: z.string(),
+  currency_name: z.string(),
+  currency_symbol: z.string(),
+  rate: z.number(),
+  timestamp: z.coerce.date()
+});
 
-export interface SteamInventoryAsset {
-  assetid: string
-  classid: string
-  instanceid?: string | null
-  contextid?: string | null
-  market_hash_name?: string | null
-  icon_url?: string | null
-  name?: string | null
-  type?: string | null
-  tradable?: boolean | null
-  marketable?: boolean | null
-  inspect_link?: string | null
-}
+export const CurrencyRatesModel = z.object({
+  items: z.array(CurrencyRateModel)
+});
 
-export interface SteamInventory {
-  steam_id: string
-  assets: Array<SteamInventoryAsset>
-}
+export const PlayerCountsLatestModel = z.object({
+  timestamp: z.coerce.date(),
+  count: z.number()
+});
 
-export interface SteamFriendslist {
-  data: unknown
-}
+export const PlayerCountsHistoryModel = z.object({
+  items: z.array(z.object({
+    timestamp: z.coerce.date(),
+    count: z.number()
+  }))
+});
 
-export interface FloatInfo {
-  time?: number | null
-  url?: string | null
-  iteminfo?: Record<string, unknown> | null
-  status?: unknown | null
-}
+export const SteamProfileModel = z.object({
+  data: z.unknown()
+});
 
-export interface MarketInfo {
-  market: string
-  url: string
-  description: string
-  type: string
-  country: string
-  icon: string
-  trustpilot: {
-    rating: number
-    reviews: number
-    link: string
-  }
-  fees: {
-    deposit: number
-    buyer: number
-    seller: number
-    withdrawal: number
-  }
-  updated_at: string
-}
+const SteamInventoryAssetModel = z.object({
+  assetid: z.string(),
+  classid: z.string(),
+  instanceid: z.string().nullable().optional(),
+  contextid: z.string().nullable().optional(),
+  market_hash_name: z.string().nullable().optional(),
+  icon_url: z.string().nullable().optional(),
+  name: z.string().nullable().optional(),
+  type: z.string().nullable().optional(),
+  tradable: z.boolean().nullable().optional(),
+  marketable: z.boolean().nullable().optional(),
+  inspect_link: z.string().nullable().optional()
+});
 
-export type Markets = MarketInfo[]
+export const SteamInventoryModel = z.object({
+  steam_id: z.string(),
+  assets: z.array(SteamInventoryAssetModel)
+});
+
+export const SteamFriendslistModel = z.object({
+  data: z.unknown()
+});
+
+const StickerModel = z.object({
+  slot: z.number(),
+  sticker_id: z.number(),
+  wear: z.number()
+});
+
+const ItemInfoModel = z.object({
+  accountid: z.string(),
+  defindex: z.number(),
+  paintindex: z.number(),
+  rarity: z.number(),
+  quality: z.number(),
+  paintseed: z.number(),
+  paintwear: z.number(),
+  floatvalue: z.number(),
+  origin: z.number(),
+  itemid: z.string(),
+  stickers: z.array(StickerModel)
+});
+
+export const FloatInfoModel = z.object({
+  time: z.coerce.date(),
+  url: z.string(),
+  iteminfo: ItemInfoModel,
+  status: z.string()
+});
+
+const MarketInfoModel = z.object({
+  market: z.string(),
+  url: z.string(),
+  description: z.string(),
+  type: z.string().nullable(),
+  country: z.string(),
+  icon: z.string().nullable(),
+  trustpilot: z.object({
+    rating: z.number(),
+    reviews: z.number(),
+    link: z.string()
+  }),
+  fees: z.object({
+    deposit: z.number().nullable(),
+    buyer: z.union([
+      z.number(),
+      z.object({ min: z.number(), max: z.number() })
+    ]).nullable(),
+    seller: z.union([
+      z.number(),
+      z.object({ min: z.number(), max: z.number() })
+    ]).nullable(),
+    withdrawal: z.number().nullable()
+  }),
+  updated_at: z.coerce.date()
+});
+
+export const MarketsModel = z.array(MarketInfoModel);
+
+
+export type ListingsLatestAggregated = z.infer<typeof ListingsLatestAggregatedModel>;
+export type ListingsHistoryAggregated = z.infer<typeof ListingsHistoryAggregatedModel>;
+export type SalesLatestAggregated = z.infer<typeof SalesLatestAggregatedModel>;
+export type SalesHistoryAggregated = z.infer<typeof SalesHistoryAggregatedModel>;
+export type Items = z.infer<typeof ItemsModel>;
+export type CurrencyRates = z.infer<typeof CurrencyRatesModel>;
+export type PlayerCountsLatest = z.infer<typeof PlayerCountsLatestModel>;
+export type PlayerCountsHistory = z.infer<typeof PlayerCountsHistoryModel>;
+export type SteamProfile = z.infer<typeof SteamProfileModel>;
+export type SteamInventoryAsset = z.infer<typeof SteamInventoryAssetModel>;
+export type SteamInventory = z.infer<typeof SteamInventoryModel>;
+export type SteamFriendslist = z.infer<typeof SteamFriendslistModel>;
+export type FloatInfo = z.infer<typeof FloatInfoModel>;
+export type MarketInfo = z.infer<typeof MarketInfoModel>;
+export type Markets = z.infer<typeof MarketsModel>;
 
 

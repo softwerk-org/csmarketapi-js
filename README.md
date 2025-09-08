@@ -1,6 +1,6 @@
 # csmarketapi
 
-Lightweight JS/TS client for CSMarketAPI. ESM, typed, fetch-based.
+Lightweight JS/TS client for CSMarketAPI. ESM, typed, fetch-based, runtime validated with Zod.
 
 ## Install
 ```bash
@@ -16,7 +16,6 @@ import { CSMarketAPI, Market, Currency } from "csmarketapi"
 const client = new CSMarketAPI({ apiKey: process.env.API_KEY! })
 const latest = await client.getListingsLatestAggregated({
   marketHashName: "Chroma 2 Case",
-  markets: Object.values(Market),
   currency: Currency.USD,
 })
 console.log(latest.market_hash_name, latest.listings.length)
