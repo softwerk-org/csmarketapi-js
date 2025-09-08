@@ -141,8 +141,7 @@ export class CSMarketAPI {
     }
 
     async getMarkets(): Promise<Markets> {
-        const markets = await this.request<Markets["markets"]>("/v1/markets")
-        return { markets }
+        return this.request<Markets>("/v1/markets")
     }
 
     async getCurrencyRates(): Promise<CurrencyRates> {
