@@ -19,7 +19,9 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && bun build ./src/index.ts --target bun --format esm --sourcemap --outdir dist"
+    "build": "tsc -p tsconfig.build.json && bun build ./src/index.ts --target bun --format esm --sourcemap --outdir dist",
+    "clean": "rm -rf dist",
+    "test": "bun test"
   },
   "keywords": [
     "csgo",

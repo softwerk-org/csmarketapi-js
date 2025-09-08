@@ -69,7 +69,7 @@ export class CSMarketAPI {
 
     async getListingsLatestAggregated(args: {
         marketHashName: string
-        markets: ReadonlyArray<Market>
+        markets?: ReadonlyArray<Market>
         currency?: Currency
         maxAge?: string | null
     }): Promise<ListingsLatestAggregated> {
@@ -84,7 +84,7 @@ export class CSMarketAPI {
 
     async getListingsHistoryAggregated(args: {
         marketHashName: string
-        markets: ReadonlyArray<Market>
+        markets?: ReadonlyArray<Market>
         currency?: Currency
         maxAge?: string | null
     }): Promise<ListingsHistoryAggregated> {
@@ -103,7 +103,7 @@ export class CSMarketAPI {
 
     async getSalesLatestAggregated(args: {
         marketHashName: string
-        markets: ReadonlyArray<Market>
+        markets: ReadonlyArray<Market> | undefined
         currency?: Currency
     }): Promise<SalesLatestAggregated> {
         const { marketHashName, markets, currency = Currency.USD } = args
@@ -116,7 +116,7 @@ export class CSMarketAPI {
 
     async getSalesHistoryAggregated(args: {
         marketHashName: string
-        markets: ReadonlyArray<Market>
+        markets: ReadonlyArray<Market> | undefined
         start?: string | Date | null
         end?: string | Date | null
         currency?: Currency
