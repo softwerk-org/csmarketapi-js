@@ -148,4 +148,27 @@ export interface FloatInfo {
   status?: unknown | null
 }
 
+export interface MarketInfo {
+  market: string
+  url: string
+  description: string
+  type: string
+  country: string
+  icon: string
+  trustpilot: {
+    rating: number
+    reviews: number
+    link: string
+  }
+  fees: {
+    deposit: number
+    buyer: number
+    seller: number
+    withdrawal: number
+  }
+  updated_at: string
+}
+
+export type Markets = MarketInfo[]
+
 
