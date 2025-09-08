@@ -29,5 +29,3 @@ jobs:
       run: bun run test
       env:
         API_KEY: ${{ secrets.API_KEY }}
-      # Don't fail if API_KEY is not set (tests will be skipped)
-      continue-on-error: true

@@ -6,50 +6,41 @@ let client: CSMarketAPI | undefined;
 
 beforeAll(() => {
   if (!apiKey) {
-    console.log('Skipping all tests - API_KEY not set');
-    client = undefined;
-    return;
+    throw new Error('API_KEY environment variable is required for tests');
   }
   client = new CSMarketAPI({ apiKey });
 });
 
 describe('CSMarketAPI Tests', () => {
   test('getItems', async () => {
-    if (!client) return;
-    expect(await client.getItems()).toBeDefined();
+    expect(await client!.getItems()).toBeDefined();
   });
 
   test('getMarkets', async () => {
-    if (!client) return;
-    expect(await client.getMarkets()).toBeDefined();
+    expect(await client!.getMarkets()).toBeDefined();
   });
 
   test('getCurrencyRates', async () => {
-    if (!client) return;
-    expect(await client.getCurrencyRates()).toBeDefined();
+    expect(await client!.getCurrencyRates()).toBeDefined();
   });
 
   test('getPlayerCountsLatest', async () => {
-    if (!client) return;
-    expect(await client.getPlayerCountsLatest()).toBeDefined();
+    expect(await client!.getPlayerCountsLatest()).toBeDefined();
   });
 
   test('getPlayerCountsHistory', async () => {
-    if (!client) return;
-    expect(await client.getPlayerCountsHistory()).toBeDefined();
+    expect(await client!.getPlayerCountsHistory()).toBeDefined();
   });
 
   test('getListingsLatestAggregated', async () => {
-    if (!client) return;
-    expect(await client.getListingsLatestAggregated({
+    expect(await client!.getListingsLatestAggregated({
       marketHashName: 'Shadow Case',
       currency: Currency.USD
     })).toBeDefined();
   });
 
   test('getListingsHistoryAggregated', async () => {
-    if (!client) return;
-    expect(await client.getListingsHistoryAggregated({
+    expect(await client!.getListingsHistoryAggregated({
       marketHashName: 'Shadow Case',
       markets: [Market.STEAMCOMMUNITY],
       currency: Currency.USD
@@ -57,8 +48,7 @@ describe('CSMarketAPI Tests', () => {
   });
 
   test('getSalesLatestAggregated', async () => {
-    if (!client) return;
-    expect(await client.getSalesLatestAggregated({
+    expect(await client!.getSalesLatestAggregated({
       marketHashName: 'Shadow Case',
       markets: [Market.STEAMCOMMUNITY],
       currency: Currency.USD
@@ -66,8 +56,7 @@ describe('CSMarketAPI Tests', () => {
   });
 
   test('getSalesHistoryAggregated', async () => {
-    if (!client) return;
-    expect(await client.getSalesHistoryAggregated({
+    expect(await client!.getSalesHistoryAggregated({
       marketHashName: 'Shadow Case',
       markets: [Market.STEAMCOMMUNITY],
       currency: Currency.USD
