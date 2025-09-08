@@ -1,6 +1,6 @@
 {
   "name": "csmarketapi",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "The official js/ts library for CSMarketAPI",
   "type": "module",
   "main": "dist/index.js",
