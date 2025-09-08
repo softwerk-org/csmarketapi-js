@@ -28,4 +28,4 @@ jobs:
     - name: Run tests on built version
       run: bun run test
       env:
-        API_KEY: ${{ secrets.API_KEY }}
+        API_KEY: ${{ secrets.CSMARKETAPI_KEY }}
