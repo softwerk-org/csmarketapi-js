@@ -25,8 +25,6 @@ console.log(latest.market_hash_name, latest.listings.length)
 - Listings: `getListingsLatestAggregated`, `getListingsHistoryAggregated`
 - Sales: `getSalesLatestAggregated`, `getSalesHistoryAggregated`
 - Meta: `getItems`, `getMarkets`, `getCurrencyRates`, `getPlayerCountsLatest`, `getPlayerCountsHistory`
-- Steam: `getSteamProfile`, `getSteamInventory`, `getSteamFriendslist`
-- Float: `getFloatInfo`
 
 Enums: `Market`, `Currency`
 
