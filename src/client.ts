@@ -1,7 +1,6 @@
 import { Currency, Market } from "./enums";
 import type {
     CurrencyRates,
-    FloatInfo,
     Items,
     ListingsHistoryAggregated,
     ListingsLatestAggregated,
@@ -9,10 +8,7 @@ import type {
     PlayerCountsHistory,
     PlayerCountsLatest,
     SalesHistoryAggregated,
-    SalesLatestAggregated,
-    SteamFriendslist,
-    SteamInventory,
-    SteamProfile
+    SalesLatestAggregated
 } from "./models";
 import {
     ItemsModel,
@@ -23,10 +19,6 @@ import {
     ListingsHistoryAggregatedModel,
     SalesLatestAggregatedModel,
     SalesHistoryAggregatedModel,
-    SteamProfileModel,
-    SteamInventoryModel,
-    SteamFriendslistModel,
-    FloatInfoModel,
     MarketsModel
 } from "./models";
 
@@ -183,33 +175,7 @@ export class CSMarketAPI {
             ...(end ? { end } : {})
         })
         const result = { items }
-        return PlayerCountsHistoryModel.parse(result) 
-    }
-
-    async getSteamProfile(args: { steamId: string }): Promise<SteamProfile> {
-        const { steamId } = args
-        const data = await this.request<unknown>("/v1/steam/profile", { steam_id: steamId })
-        const result = { data }
-        return SteamProfileModel.parse(result) 
-    }
-
-    async getSteamInventory(args: { steamId: string }): Promise<SteamInventory> {
-        const { steamId } = args
-        const result = await this.request<SteamInventory>("/v1/steam/inventory", { steam_id: steamId })
-        return SteamInventoryModel.parse(result) 
-    }
-
-    async getSteamFriendslist(args: { steamId: string }): Promise<SteamFriendslist> {
-        const { steamId } = args
-        const data = await this.request<unknown>("/v1/steam/friendslist", { steam_id: steamId })
-        const result = { data }
-        return SteamFriendslistModel.parse(result) 
-    }
-
-    async getFloatInfo(args: { inspectLink: string }): Promise<FloatInfo> {
-        const { inspectLink } = args
-        const result = await this.request<FloatInfo>("/v1/float", { inspect_link: inspectLink })
-        return FloatInfoModel.parse(result) 
+        return PlayerCountsHistoryModel.parse(result)
     }
 }
 

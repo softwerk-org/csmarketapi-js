@@ -123,60 +123,6 @@ export const PlayerCountsHistoryModel = z.object({
   }))
 });
 
-export const SteamProfileModel = z.object({
-  data: z.unknown()
-});
-
-const SteamInventoryAssetModel = z.object({
-  assetid: z.string(),
-  classid: z.string(),
-  instanceid: z.string().nullable().optional(),
-  contextid: z.string().nullable().optional(),
-  market_hash_name: z.string().nullable().optional(),
-  icon_url: z.string().nullable().optional(),
-  name: z.string().nullable().optional(),
-  type: z.string().nullable().optional(),
-  tradable: z.boolean().nullable().optional(),
-  marketable: z.boolean().nullable().optional(),
-  inspect_link: z.string().nullable().optional()
-});
-
-export const SteamInventoryModel = z.object({
-  steam_id: z.string(),
-  assets: z.array(SteamInventoryAssetModel)
-});
-
-export const SteamFriendslistModel = z.object({
-  data: z.unknown()
-});
-
-const StickerModel = z.object({
-  slot: z.number(),
-  sticker_id: z.number(),
-  wear: z.number()
-});
-
-const ItemInfoModel = z.object({
-  accountid: z.string(),
-  defindex: z.number(),
-  paintindex: z.number(),
-  rarity: z.number(),
-  quality: z.number(),
-  paintseed: z.number(),
-  paintwear: z.number(),
-  floatvalue: z.number(),
-  origin: z.number(),
-  itemid: z.string(),
-  stickers: z.array(StickerModel)
-});
-
-export const FloatInfoModel = z.object({
-  time: z.coerce.date(),
-  url: z.string(),
-  iteminfo: ItemInfoModel,
-  status: z.string()
-});
-
 const MarketInfoModel = z.object({
   market: z.string(),
   url: z.string(),
@@ -215,11 +161,6 @@ export type Items = z.infer<typeof ItemsModel>;
 export type CurrencyRates = z.infer<typeof CurrencyRatesModel>;
 export type PlayerCountsLatest = z.infer<typeof PlayerCountsLatestModel>;
 export type PlayerCountsHistory = z.infer<typeof PlayerCountsHistoryModel>;
-export type SteamProfile = z.infer<typeof SteamProfileModel>;
-export type SteamInventoryAsset = z.infer<typeof SteamInventoryAssetModel>;
-export type SteamInventory = z.infer<typeof SteamInventoryModel>;
-export type SteamFriendslist = z.infer<typeof SteamFriendslistModel>;
-export type FloatInfo = z.infer<typeof FloatInfoModel>;
 export type MarketInfo = z.infer<typeof MarketInfoModel>;
 export type Markets = z.infer<typeof MarketsModel>;
 
