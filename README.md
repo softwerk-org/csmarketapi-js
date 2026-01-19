@@ -1,6 +1,6 @@
 # csmarketapi
 
-Lightweight JS/TS client for CSMarketAPI. ESM, typed, fetch-based, runtime validated with Zod.
+Lightweight JS/TS client for csmarketapi.com ESM, typed, fetch-based, runtime validated with Zod.
 
 ## Install
 ```bash
